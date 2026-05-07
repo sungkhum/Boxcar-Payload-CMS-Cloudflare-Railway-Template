@@ -21,7 +21,9 @@ export const Users: CollectionConfig = {
     {
       name: 'role',
       type: 'select',
-      defaultValue: 'editor',
+      // No requester in context = create-first-user flow → admin.
+      // Otherwise an admin is inviting someone → start them as editor.
+      defaultValue: ({ user }) => (user ? 'editor' : 'admin'),
       required: true,
       options: [
         { label: 'Admin', value: 'admin' },
