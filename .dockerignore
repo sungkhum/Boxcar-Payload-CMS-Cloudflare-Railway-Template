@@ -1,0 +1,19 @@
+node_modules
+.next
+.git
+.github
+.vscode
+.idea
+.env
+.env.*
+!.env.example
+.postgres-data
+coverage
+README.md
+CLAUDE.md
+*.log
+.DS_Store
+.claude
+
+# Reference material — WordPress theme being migrated, not part of the runtime app
+WordpressTheme

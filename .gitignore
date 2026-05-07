@@ -1,0 +1,57 @@
+node_modules
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Env / secrets
+.env
+.env*.local
+.env.production
+.env.development
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Payload generated artifacts
+src/app/(payload)/admin/importMap.js
+src/payload-types.ts
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Local Postgres data (docker-compose volume mount)
+.postgres-data/
+
+# Reference material — kept locally for the WordPress migration but not part
+# of the runtime app. ~175 MB of binaries; would bloat git and exceed
+# GitHub's 100 MB-per-file ceiling.
+WordpressTheme/
+
+# Misc
+coverage/
+.turbo/
+# next-agents-md
+.next-docs/
