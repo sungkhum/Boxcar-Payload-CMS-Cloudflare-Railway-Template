@@ -2,6 +2,7 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 import Link from 'next/link'
 import { formatDate } from '@/lib/utils'
+import { publicPostsWhere } from '@/lib/queries'
 import { Separator } from '@/components/ui/separator'
 
 export const dynamic = 'force-dynamic'
@@ -11,7 +12,7 @@ export default async function HomePage() {
 
   const { docs: posts } = await payload.find({
     collection: 'posts',
-    where: { _status: { equals: 'published' } },
+    where: publicPostsWhere(),
     sort: '-publishedAt',
     limit: 10,
     depth: 1,

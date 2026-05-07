@@ -68,7 +68,11 @@ export const Posts: CollectionConfig = {
       admin: {
         position: 'sidebar',
         date: { pickerAppearance: 'dayAndTime' },
-        description: 'Auto-set on first publish if left blank.',
+        // Dynamic description: shows "Scheduled — will publish in N days"
+        // when set to a future date, otherwise "Publishes immediately."
+        components: {
+          Description: '/components/admin/PublishedAtDescription',
+        },
       },
     },
     legacyField,

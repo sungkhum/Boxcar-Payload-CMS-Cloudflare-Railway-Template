@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { formatDate } from '@/lib/utils'
+import { publicPostsWhere } from '@/lib/queries'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,14 +12,19 @@ type Props = {
   params: Promise<{ slug: string }>
 }
 
+const slugWhere = (slug: string) => {
+  const base = publicPostsWhere()
+  return {
+    and: [{ slug: { equals: slug } }, base],
+  }
+}
+
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'posts',
-    where: {
-      and: [{ slug: { equals: slug } }, { _status: { equals: 'published' } }],
-    },
+    where: slugWhere(slug),
     limit: 1,
   })
   const post = docs[0]
@@ -35,9 +41,7 @@ export default async function PostPage({ params }: Props) {
 
   const { docs } = await payload.find({
     collection: 'posts',
-    where: {
-      and: [{ slug: { equals: slug } }, { _status: { equals: 'published' } }],
-    },
+    where: slugWhere(slug),
     limit: 1,
     depth: 2,
   })

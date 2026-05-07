@@ -36,6 +36,18 @@ export default buildConfig({
     meta: {
       titleSuffix: ' — Boxcar Admin',
     },
+    components: {
+      // Custom view: lists posts whose `publishedAt` is set in the future
+      // (= scheduled). See the file header for the Payload public-API
+      // surfaces it depends on.
+      views: {
+        scheduledPublishes: {
+          path: '/scheduled',
+          Component: '/components/admin/ScheduledPublishesView',
+        },
+      },
+      afterNavLinks: ['/components/admin/ScheduledPublishesNavLink'],
+    },
   },
   collections: [Users, Media, Posts, Pages, Categories, Tags, Comments],
   editor: lexicalEditor(),
