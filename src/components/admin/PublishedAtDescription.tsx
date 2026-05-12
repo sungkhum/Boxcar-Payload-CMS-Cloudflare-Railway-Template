@@ -2,7 +2,8 @@
  * Field description that mirrors the current `publishedAt` value:
  *   - blank        → "Auto-set on first publish if left blank."
  *   - now or past  → "Publishes immediately on save."
- *   - in the future → "Scheduled — will publish in N days (date)."
+ *   - in the future → "Will publish in N days (date). Click Schedule Post
+ *                     to commit; clear this date to cancel."
  *
  * Single Payload coupling surface: `useField` from `@payloadcms/ui` (a
  * documented public hook). If that ever moves, this whole component is
@@ -38,7 +39,8 @@ export const PublishedAtDescription = () => {
 
   return (
     <span style={{ color: 'var(--theme-success-500, var(--theme-elevation-700))' }}>
-      Will publish {when} ({target.toLocaleString()}). Click Schedule Post to commit.
+      Will publish {when} ({target.toLocaleString()}). Click Schedule Post to commit;
+      clear this date to cancel.
     </span>
   )
 }

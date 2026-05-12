@@ -1,7 +1,5 @@
 import type { TaskConfig } from 'payload'
 
-import { revalidatePostPaths } from '../revalidate'
-
 // Payload's `inputSchema` doesn't flow into the handler's `input` argument
 // at the TypeScript level (it stays `JsonObject | undefined`). Declare the
 // shape once and cast inside the handler so the rest of the body is typed.
@@ -66,10 +64,11 @@ export const publishScheduledPostTask: TaskConfig<'publishScheduledPost'> = {
       overrideAccess: true,
     })
 
-    // Bust the ISR cache so the post appears on the public site
-    // immediately after the cron flips status (not on next 60s revalidate).
-    revalidatePostPaths((doc as { slug?: string | null }).slug)
-
+    // ISR cache busting note: Posts.afterChange calls revalidatePostPaths
+    // as part of this update, but those calls no-op here because the cron
+    // runs in a separate container with no Next.js request context. The
+    // helper swallows the resulting throw. Public visibility lands on the
+    // natural ISR window (≤60s) — fine for editorial use.
     return { output: {} }
   },
 }

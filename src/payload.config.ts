@@ -117,7 +117,7 @@ export default buildConfig({
   // Jobs queue: powers our scheduled-publish flow. Editors set a future
   // publishedAt and click Publish; the Posts afterChange hook enqueues a
   // `publishScheduledPost` job here. A separate Railway cron service
-  // (configured with `cronSchedule: */5 * * * *` and `startCommand: pnpm
+  // (configured with `cronSchedule: */30 * * * *` and `startCommand: pnpm
   // jobs:run`) processes the queue — see scripts/run-jobs.ts. autoRun is
   // intentionally NOT set here so the Next.js app process stays focused
   // on serving requests.

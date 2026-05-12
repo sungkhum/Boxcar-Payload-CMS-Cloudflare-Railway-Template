@@ -157,6 +157,19 @@ export const Posts: CollectionConfig = {
 
         if (!isScheduled) return doc
 
+        // Gate against autosave: only enqueue when the scheduled time
+        // actually changed. Posts autosave every 800ms (autosave.interval),
+        // each tick re-running afterChange with the same _status + publishedAt
+        // — without this guard every editing session would spam dozens of
+        // redundant jobs into payload_jobs.
+        const sameScheduleAsBefore =
+          previousDoc?._status === 'draft' &&
+          previousDoc?.publishedAt &&
+          new Date(previousDoc.publishedAt).getTime() ===
+            new Date(doc.publishedAt).getTime()
+
+        if (sameScheduleAsBefore) return doc
+
         // Enqueue the publish job. The handler is idempotent — if the doc is
         // saved again with a different publishedAt, the old job will see a
         // mismatch when it runs and no-op.
